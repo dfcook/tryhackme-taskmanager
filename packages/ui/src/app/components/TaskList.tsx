@@ -1,22 +1,28 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { FC, Suspense } from 'react'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Task } from '../hooks/useTasks'
+import TaskCard from './TaskCard'
 
-const fetchTasks = async () => {
-  const res = await fetch('http://localhost:8000/tasks')
-  return res.json()
+interface TaskListProps {
+  tasks: Task[]
+  status: Task['status']
 }
 
-const TaskList = () => {
-  const { data } = useQuery({
-    queryKey: ['tasks'],
-    queryFn: fetchTasks,
-  })
-  console.log(data)
-
+const TaskList: FC<TaskListProps> = ({ tasks, status }) => {
   return (
-    <div>
-      <h1>Task List</h1>
+    <div className="bg-slate-900 p-6 border-slate-700 rounded-md">
+      <h2 className="text-2xl font-semibold capitalize text-slate-100">{status}</h2>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ScrollArea className="h-[90%]">
+          {tasks
+            .filter((task) => task.status === status)
+            .map((task) => (
+              <TaskCard key={task._id} task={task} />
+            ))}
+        </ScrollArea>
+      </Suspense>
     </div>
   )
 }

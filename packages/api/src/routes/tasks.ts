@@ -12,7 +12,7 @@ tasksRouter.get('/', async (_: Request, res: Response) => {
 
 tasksRouter.get('/:id', async (req: Request, res: Response) => {
   const task = await TaskModel.findById(req.params.id)
-  if (!task) return res.status(404).send('Task not found')
+  if (!task) return res.status(404).send({ message: 'Task not found' })
   return res.json(task)
 })
 
@@ -27,14 +27,14 @@ tasksRouter.post('/', validate(taskValidationSchema), async (req: Request, res: 
 
 tasksRouter.put('/:id', validate(taskValidationSchema), async (req: Request, res: Response) => {
   const task = await TaskModel.findByIdAndUpdate(req.params.id, req.body)
-  if (!task) return res.status(404).send('Task not found')
+  if (!task) return res.status(404).send({ message: 'Task not found' })
   const updated = await TaskModel.findById(req.params.id)
   return res.json(updated)
 })
 
 tasksRouter.delete('/:id', async (req: Request, res: Response) => {
   const task = await TaskModel.findByIdAndDelete(req.params.id)
-  if (!task) return res.status(404).send('Task not found')
+  if (!task) return res.status(404).send({ message: 'Task not found' })
   return res.json(task)
 })
 

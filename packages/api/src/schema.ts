@@ -6,7 +6,6 @@ export interface Task extends Document {
   description?: string
   status: 'todo' | 'doing' | 'done'
   size: 'xs' | 's' | 'm' | 'l' | 'xl'
-  requiredBy?: Date
 }
 
 export const taskSchema = new Schema<Task>({
@@ -14,7 +13,6 @@ export const taskSchema = new Schema<Task>({
   description: { type: String },
   status: { type: String, enum: ['todo', 'doing', 'done'], required: true },
   size: { type: String, enum: ['xs', 's', 'm', 'l', 'xl'], required: true },
-  requiredBy: { type: Date },
 })
 
 export const taskValidationSchema = z.object({
@@ -22,7 +20,6 @@ export const taskValidationSchema = z.object({
   description: z.string().optional(),
   status: z.enum(['todo', 'doing', 'done']),
   size: z.enum(['xs', 's', 'm', 'l', 'xl']),
-  requiredBy: z.date().optional(),
 })
 
 export const TaskModel = mongoose.model<Task>('Task', taskSchema)
