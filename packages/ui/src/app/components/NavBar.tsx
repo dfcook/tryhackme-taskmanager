@@ -6,7 +6,7 @@ const NavBar = () => {
     <nav className="sticky inset-x-0 top-0 z-30 h-14 w-full bg-[#6C304C] backdrop-blur-lg text-slate-100 transition-all">
       <MaxWidthWrapper>
         <div className="flex h-14 items-center justify-between">
-          <span>Task Manager</span>
+          <h1>Task Manager</h1>
 
           <div className="hidden items-center space-x-4 sm:flex">
             <TaskDialog />
